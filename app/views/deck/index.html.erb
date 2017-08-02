@@ -1,0 +1,25 @@
+<h1>Deck: <%= @name %></h1>
+<p>Find me in app/views/deck/index.html.erb</p>
+<p><%= @description %></p>
+
+<strong>Stats:</strong>
+<ul>
+  <% @stats['types'].each do |type, count| %>
+  <li><%= type %> <%= count %></li>
+  <% end %>
+</ul>
+
+<strong>Main Deck:</strong>
+<ul>
+  <% @deck['main'].each do |name, details| %>
+    <li><%= details['count'] %> - <%= name %> <%= details['data'].mana_cost %></li>
+  <% end %>
+</ul>
+
+
+<strong>Sideboard:</strong>
+<ul>
+  <% @deck['sideboard'].each do |name, details| %>
+    <li><%= details['count'] %> - <%= name %> <%= details['data'].mana_cost %></li>
+  <% end %>
+</ul>
