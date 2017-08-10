@@ -1,0 +1,79 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  multiverse_id: 1
+  layout: MyString
+  mana_cost: MyString
+  cmc: 1
+  colors: 
+  type: 
+  supertypes: 
+  subtypes: 
+  rarity: MyString
+  text: MyString
+  flavor: MyString
+  artist: MyString
+  number: 1
+  power: MyString
+  toughness: MyString
+  loyalty: 1
+  variations: MyString
+  watermark: MyString
+  border: MyString
+  timeshifted: MyString
+  hand: MyString
+  life: 1
+  reserved: MyString
+  release_date: MyString
+  starter: MyString
+  rulings: 
+  foreign_names: MyString
+  printings: 
+  original_text: MyString
+  original_type: MyString
+  legalities: 
+  source: MyString
+  image_url: MyString
+  set: 
+  set_name: 
+  id: MyString
+
+two:
+  name: MyString
+  multiverse_id: 1
+  layout: MyString
+  mana_cost: MyString
+  cmc: 1
+  colors: 
+  type: 
+  supertypes: 
+  subtypes: 
+  rarity: MyString
+  text: MyString
+  flavor: MyString
+  artist: MyString
+  number: 1
+  power: MyString
+  toughness: MyString
+  loyalty: 1
+  variations: MyString
+  watermark: MyString
+  border: MyString
+  timeshifted: MyString
+  hand: MyString
+  life: 1
+  reserved: MyString
+  release_date: MyString
+  starter: MyString
+  rulings: 
+  foreign_names: MyString
+  printings: 
+  original_text: MyString
+  original_type: MyString
+  legalities: 
+  source: MyString
+  image_url: MyString
+  set: 
+  set_name: 
+  id: MyString
