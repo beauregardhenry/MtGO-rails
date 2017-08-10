@@ -22,18 +22,32 @@ Deck_index = {"1" => AgelessEntityDeck,
 
 class DeckController < ApplicationController
   def index
-    @name = Deck_index[TargetDeck][:name]
-    @description = Deck_index[TargetDeck][:description]
 
-    # grab the deck from the disk
-    contents = IO.readlines(Deck_index[TargetDeck][:path])
-    location = 'main'
 
-    @deck = {'main' => {}, 'sideboard' => {} }
-
-    @stats = {'types' => {} }
-
+    contents = IO.readlines(Deck_index[TargetDeck][:path]) # where is the deck?
     # go over every line of the deck file
+
+# First Function (get deck info)
+# open file on the disk
+# read file in
+# split lines of the file up
+# separate main from sideboard
+# identify card names (key) and how many are in main deck (value)
+# identify card names (key) and how many are in the sideboard (value)
+
+# Second Function (get card info)
+# take card names and go get card_info from the API
+
+# Third Function (write deck to database)
+#
+
+# Fourth Function / New Way the Controller Works
+# look up card_info from our own database
+
+# might end up .each over the same data set several times, but that is ok
+
+    deck = {'main' => {}, 'sideboard' => {} }
+    location = 'main'
     contents.each do |line|
       line.strip!  # remove the whitespace from the ends of the lines
       if line == ""
@@ -59,7 +73,11 @@ class DeckController < ApplicationController
         end # if
       end
 
-      @deck[location][card_name] = { 'count' => card_count, 'data' => card_data }
+      deck[location][card_name] = { 'count' => card_count, 'data' => card_data }
     end # .each
+
+    @name = Deck_index[TargetDeck][:name]
+    @description = Deck_index[TargetDeck][:description]
+    @deck = deck
   end # def index
 end # class Deck_Controller
