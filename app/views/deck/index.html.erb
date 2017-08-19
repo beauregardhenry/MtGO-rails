@@ -2,25 +2,16 @@
 <p>Find me in app/views/deck/index.html.erb</p>
 <p><%= @description %></p>
 
-<!-- Deck info on Types is important, but this doesn't work
-<strong>Stats:</strong>
-<ul>
-  <% @stats['types'].each do |type, count| %>
-  <li><%= type %> <%= count %></li>
-  <% end %>
-</ul>
-closed comment-->
-
 <strong>Main Deck:</strong>
 <ul>
-  <% @deck['main'].each do |name, details| %>
+  <% @deck['main_deck'].each do |name, details| %>
 
     <li>
       <% details['count'].to_i.times do %>
-        <% if details['data'].nil? %>
+        <% if details['card'].nil? %>
         NO KNOWN CARD FOR <%= name %>.
         <% else %>
-        <img src="<%= details['data'].image_url %>">
+        <img src="<%= details['card'].image_url %>">
         <% end %>
       <% end %>
       <br/>
@@ -35,7 +26,7 @@ closed comment-->
     <li>
       <br/>
    <% details['count'].to_i.times do %>
-      <img src="<%= details['data'].image_url %>">
+      <img src="<%= details['card'].image_url %>">
       <% end %>
     </li>
   <% end %>
