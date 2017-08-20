@@ -1,3 +1,7 @@
+# MTGO Rails Playground
+
+This is where we'll learn some ruby on rails.
+
 # README
 
 This README would normally document whatever steps are necessary to get the
