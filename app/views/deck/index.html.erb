@@ -21,9 +21,9 @@
   <% @deck.sideboard().each do |card, card_count| %>
     <li>
       <% card_count.times do %>
-      <br/>
       <img src="<%= card.image_url %>">
       <% end %>
+      <br/>
     </li>
   <% end %>
 </ul>
