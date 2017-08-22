@@ -7,7 +7,6 @@ class Card < ApplicationRecord
   has_and_belongs_to_many :legalities
   has_many :rulings
   has_many :foreign_names
-  has_and_belongs_to_many :deck
 
   has_many :deck_archives
   has_many :decks, :through => :deck_archives

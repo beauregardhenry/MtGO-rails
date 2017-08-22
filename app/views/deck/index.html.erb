@@ -4,15 +4,11 @@
 
 <strong>Main Deck:</strong>
 <ul>
-  <% @deck['main_deck'].each do |name, details| %>
+  <% @deck.main_deck().each do |card, card_count| %>
 
     <li>
-      <% details['count'].to_i.times do %>
-        <% if details['card'].nil? %>
-        NO KNOWN CARD FOR <%= name %>.
-        <% else %>
-        <img src="<%= details['card'].image_url %>">
-        <% end %>
+      <% card_count.times do %>
+        <img src="<%= card.image_url %>">
       <% end %>
       <br/>
     </li>
@@ -22,11 +18,11 @@
 
 <strong>Sideboard:</strong>
 <ul>
-  <% @deck['sideboard'].each do |name, details| %>
+  <% @deck.sideboard().each do |card, card_count| %>
     <li>
+      <% card_count.times do %>
       <br/>
-   <% details['count'].to_i.times do %>
-      <img src="<%= details['card'].image_url %>">
+      <img src="<%= card.image_url %>">
       <% end %>
     </li>
   <% end %>

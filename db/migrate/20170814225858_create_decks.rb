@@ -4,7 +4,7 @@ class CreateDecks < ActiveRecord::Migration[5.1]
       t.string :owner
       t.string :name
       t.string :description
-      
+
       t.timestamps
     end
   end
