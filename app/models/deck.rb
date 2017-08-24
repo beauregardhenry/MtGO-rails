@@ -11,6 +11,7 @@ class Deck < ApplicationRecord
   BurnDeck = {:owner => "Beau", :name => "Burn Baby, Burn", :description => "Fire to Your Face", :path => "./decks/Burn.deck"}
   ScarabGod = {:owner => "Beau", :name => "LOL. Nope.", :description => "Muhfuggin' Scarabs to Your Face", :path => "./decks/ScarabGod.deck"}
   DiscardDeck = {:owner => "Beau", :name => "Discard", :description => "All Your Cards Are Belong to Me!!!", :path => "./decks/Discard.deck"}
+  ComebackRed = {:owner => "Beau", :name => "Comeback Red", :description => "Le Ouch to Your Face", :path => "./decks/ComebackRed.deck"}
 
   DeckIndex = {"1" => AgelessEntityDeck,
                "2" => KirdApeDeck,
@@ -20,7 +21,8 @@ class Deck < ApplicationRecord
                "6" => DeathCloudDeck,
                "7" => BurnDeck,
                "8" => ScarabGod,
-               "9" => DiscardDeck}
+               "9" => DiscardDeck,
+               "10" => ComebackRed}
 
   def self.deck_selector(targetDeckID) # self makes this work
     return DeckIndex[targetDeckID] # return is how you get a value out of a function. very important. also stops execution. the return can be implicit, because Fucking Ruby.
@@ -72,9 +74,11 @@ class Deck < ApplicationRecord
     sorted_deck.each do |deck_location, subdeck|
       subdeck.each do |card_name, card_count|
         card = Card.where(name: card_name).where.not(set_name: 'vanguard', image_url: nil).last
-        deck.cards << card # this is where the magic happens, once you have a deck and a card
+        unless deck.cards.include?(card)
+          deck.cards << card # this is where the magic happens, once you have a deck and a card
+        end # end unless deck.cards.include?
       end # end subdeck.each
-    end # end deck.each
+    end # end sorted_deck.each
     deck.save
     deck.cards.each do |card|
       main_count = sorted_deck['main_deck'][card.name] || 0 # the || 0 avoids nil. cool stuff.
