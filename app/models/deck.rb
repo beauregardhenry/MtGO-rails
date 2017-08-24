@@ -36,7 +36,7 @@ class Deck < ApplicationRecord
       line.strip!  # remove the whitespace from the ends of the lines
       parts = line.split(' ')
       card_count = parts.shift()
-      card_name = parts.join(' ')
+      card_name = parts.join(' ').downcase
       if line == ""
         deck_location = 'sideboard'
         next
@@ -54,7 +54,7 @@ class Deck < ApplicationRecord
     deck.cards = []
     sorted_deck.each do |deck_location, subdeck|
       subdeck.each do |card_name, card_count|
-        card = Card.where(name: card_name).where.not(set_name: 'vanguard', image_url: nil).last
+        card = Card.where("lower(name) = ?", card_name.downcase).where.not(set_name: 'vanguard', image_url: nil).last
         unless deck.cards.include?(card)
           deck.cards << card # this is where the magic happens, once you have a deck and a card
         end # end unless deck.cards.include?
@@ -62,8 +62,8 @@ class Deck < ApplicationRecord
     end # end sorted_deck.each
     deck.save
     deck.cards.each do |card|
-      main_count = sorted_deck['main_deck'][card.name] || 0 # the || 0 avoids nil. cool stuff.
-      sideboard_count = sorted_deck['sideboard'][card.name] || 0
+      main_count = sorted_deck['main_deck'][card.name.downcase] || 0 # the || 0 avoids nil. cool stuff.
+      sideboard_count = sorted_deck['sideboard'][card.name.downcase] || 0
       info = DeckArchive.where(:deck_id => deck.id, :card_id => card.id).first
       info.update_attributes(
         :main_count => main_count,
