@@ -9,6 +9,6 @@ default: &default
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
   database: Magic
-  username: beauregard
+  username: <%= ENV.fetch("RAILS_DB_USER") { beauregard } %>
 development:
   <<: *default
