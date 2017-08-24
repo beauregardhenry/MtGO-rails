@@ -8,7 +8,7 @@ default: &default
   adapter: postgresql
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  database: Magic
+  database: <%= ENV.fetch("RAILS_DB_NAME") { Magic } %>
   username: <%= ENV.fetch("RAILS_DB_USER") { beauregard } %>
 development:
   <<: *default
