@@ -46,31 +46,12 @@ class Deck < ApplicationRecord
     return deck
   end # end of def self.deck_sorter
 
-  def self.add_api_query_to_deck(sorted_deck)
-    augmented_deck = {'main_deck' => {}, 'sideboard' => {} }
-    sorted_deck.each do |deck_location, subdeck| # took a long time to figure out what goes in the pipes
-      subdeck.each do |card_name, card_count|
-        api_data = MTG::Card.where(name: card_name).all
-        augmented_deck[deck_location][card_name] = { 'count' => card_count, 'api_data' => api_data }
-      end # end subdeck.each do
-    end # end deck.each do
-    return augmented_deck
-  end # end self.add_api_query_to_deck
-
   def self.write_deck_to_database(sorted_deck, deck_details)
-    augmented_deck = Deck.add_api_query_to_deck(sorted_deck)
     deck = Deck.find_or_create_by(:name => deck_details[:name])
     deck.update_attributes(
       :owner => deck_details[:owner],
       :description => deck_details[:description])
     deck.cards = []
-    augmented_deck.each do |deck_location, subdeck|
-      subdeck.each do |card_name, card_details|
-        card_details['api_data'].each do |card_data|
-          card = Card.write_card_to_database(card_data)
-        end # end card_details['api_data'].each
-      end # end subdeck.each do
-    end # end augmented_deck.each do
     sorted_deck.each do |deck_location, subdeck|
       subdeck.each do |card_name, card_count|
         card = Card.where(name: card_name).where.not(set_name: 'vanguard', image_url: nil).last
@@ -89,7 +70,6 @@ class Deck < ApplicationRecord
         :sideboard_count => sideboard_count )
       info.save
     end # end deck.cards.each do
-
     return deck
   end # end self.write_deck_to_database
 
