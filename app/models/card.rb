@@ -12,7 +12,12 @@ class Card < ApplicationRecord
   has_many :decks, :through => :deck_archives
 
   def self.write_card_to_database(card_info)
-    card = Card.find_or_create_by(:multiverse_id => card_info.multiverse_id)
+    card = Card.where(name: card_info.name, multiverse_id: card_info.multiverse_id).first
+    unless card.nil?
+       return card
+    end
+    puts "Writing #{card_info.multiverse_id} #{card_info.name}"
+    card = Card.find_or_create_by(name: card_info.name, :multiverse_id => card_info.multiverse_id)
     card.update_attributes(
       :name => card_info.name,
       :multiverse_id => card_info.multiverse_id,
