@@ -2,50 +2,6 @@ class Deck < ApplicationRecord
   has_many :deck_archives
   has_many :cards, :through => :deck_archives
 
-  KirdApeDeck = {:owner => "Beau", :name => "Kird Apes", :description => "Apes to Your Face", :path => "./decks/KirdApes.deck"}
-  SharedFateDeck = {:owner => "Beau", :name => "Shared Fate", :description => "Shared Fate, Biznatch", :path => "./decks/SharedFate.deck"}
-  AgelessEntityDeck = {:owner => "Beau", :name => "Ageless Goblets", :description => "Ageless Entity to Your Face", :path => "./decks/AgelessGoblet.deck"}
-  UntouchableEggsDeck = {:owner => "Beau", :name => "Untouchable Eggs", :description => "Here, You Hold This...", :path => "./decks/UntouchableEggs.deck"}
-  KirdApe2Deck = {:owner => "Beau", :name => "Kird Apes", :description => "Apes to Your Face", :path => "./decks/KirdApes2.deck"}
-  DeathCloudDeck = {:owner => "Beau", :name => "Death Cloud", :description => "All Victory Are Belong To Me", :path => "./decks/DeathCloud.deck"}
-  BurnDeck = {:owner => "Beau", :name => "Burn Baby, Burn", :description => "Fire to Your Face", :path => "./decks/Burn.deck"}
-  ScarabGod = {:owner => "Beau", :name => "LOL. Nope.", :description => "Muhfuggin' Scarabs to Your Face", :path => "./decks/ScarabGod.deck"}
-  DiscardDeck = {:owner => "Beau", :name => "Discard", :description => "All Your Cards Are Belong to Me!!!", :path => "./decks/Discard.deck"}
-  ComebackRed = {:owner => "Beau", :name => "Comeback Red", :description => "Le Ouch to Your Face", :path => "./decks/ComebackRed.deck"}
-
-  DeckIndex = {"1" => AgelessEntityDeck,
-               "2" => KirdApeDeck,
-               "3" => SharedFateDeck,
-               "4" => UntouchableEggsDeck,
-               "5" => KirdApe2Deck,
-               "6" => DeathCloudDeck,
-               "7" => BurnDeck,
-               "8" => ScarabGod,
-               "9" => DiscardDeck,
-               "10" => ComebackRed}
-
-  def self.deck_selector(targetDeckID) # self makes this work
-    return DeckIndex[targetDeckID] # return is how you get a value out of a function. very important. also stops execution. the return can be implicit, because Fucking Ruby.
-  end # end def deck_selector
-
-  def self.deck_sorter(selected_deck)
-    deck_contents = IO.readlines(selected_deck[:path]) # where is the deck? Go over every line of the deck file
-    deck = {'main_deck' => {}, 'sideboard' => {} } # main and sideboard are empty hashes, so how do i tell it I want {card_name: card_count} ?
-    deck_location = 'main_deck'
-    deck_contents.each do |line|
-      line.strip!  # remove the whitespace from the ends of the lines
-      parts = line.split(' ')
-      card_count = parts.shift()
-      card_name = parts.join(' ').downcase
-      if line == ""
-        deck_location = 'sideboard'
-        next
-      end # end if
-      deck[deck_location][card_name] = card_count
-    end # end .each
-    return deck
-  end # end of def self.deck_sorter
-
   def self.write_deck_to_database(sorted_deck, deck_details)
     deck = Deck.find_or_create_by(:name => deck_details[:name])
     deck.update_attributes(
