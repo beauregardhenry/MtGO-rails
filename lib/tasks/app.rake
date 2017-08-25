@@ -11,11 +11,30 @@ ComebackRed = {:owner => "Beau", :name => "Comeback Red", :description => "Le Ou
 
 DECKS = [ AgelessEntityDeck, KirdApeDeck, SharedFateDeck, UntouchableEggsDeck, KirdApe2Deck, DeathCloudDeck, BurnDeck, ScarabGod, DiscardDeck, ComebackRed ]
 
+
+def read_deck(path)
+  deck_contents = IO.readlines(path) # where is the deck? Go over every line of the deck file
+  deck = {'main_deck' => {}, 'sideboard' => {} } # main and sideboard are empty hashes, so how do i tell it I want {card_name: card_count} ?
+  deck_location = 'main_deck'
+  deck_contents.each do |line|
+    line.strip!  # remove the whitespace from the ends of the lines
+    parts = line.split(' ')
+    card_count = parts.shift()
+    card_name = parts.join(' ').downcase
+    if line == ""
+      deck_location = 'sideboard'
+      next
+    end # end if
+    deck[deck_location][card_name] = card_count
+  end # end .each
+  return deck
+end # end read_deck
+
 namespace :app do
   desc "TODO"
   task import_decks: :environment do
     DECKS.each do |deck|
-      sorted_deck = Deck.deck_sorter(deck)
+      sorted_deck = read_deck(deck[:path])
       puts "Attempting to store #{deck[:name]}"
       Deck.write_deck_to_database(sorted_deck, deck)
       puts "Stored #{deck[:name]}"
