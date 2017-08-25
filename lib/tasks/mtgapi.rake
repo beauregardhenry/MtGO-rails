@@ -3,7 +3,7 @@ require 'time'
 
 def get_and_store(page_number, page_size)
   puts "Getting API Data."
-  cards = MTG::Card.where(page: page_number, contains: 'imageUrl').where(pageSize: page_size).all
+  cards = MTG::Card.where(page: page_number, contains: 'imageUrl', pageSize: page_size).all
   puts "API Data Received."
 
   write_results(cards, nil)
