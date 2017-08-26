@@ -9,15 +9,12 @@
 <a href= "http://localhost:3000/deck/index?id=9">Comeback Red</a>
 
 <br/>
-
-<h1>Deck: <%= @name %></h1>
-<p>Find me in app/views/deck/index.html.erb</p>
-<p><%= @description %></p>
+<br/>
+<br/>
 
 <strong>Main Deck:</strong>
 <ul>
   <% @deck.main_deck().each do |card, card_count| %>
-
     <li>
       <% card_count.times do %>
         <img src="<%= card.image_url %>">
